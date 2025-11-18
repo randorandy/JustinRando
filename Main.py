@@ -15,7 +15,7 @@ import fillAssumed
 import areaRando
 from romWriter import RomWriter
 from solver import solve
-import ipspatch
+#import ipspatch
 
 
 def plmidFromHiddenness(itemArray, hiddenness, visible = True) -> bytes:
@@ -170,6 +170,10 @@ def write_rom(game: Game, romWriter: Optional[RomWriter] = None) -> str:
     romWriter.writeBytes(0x78b14, b"\x42\xc8\x5e\x16\x19\x18")
     romWriter.writeBytes(0x781dc, b"\x42\xc8\x5e\x16\x19\x18")
 
+    #Return of Justin Gray Door Patch
+    romWriter.writeBytes(0x23e57, b"\x00\xf7")
+    romWriter.writeBytes(0x27700, b"\x08\xE2\x20\xAF\x29\xD8\x7E\x89\x01\xF0\x14\xAF\x2A\xD8\x7E\x89\x01\xF0\x0C\xAF\x2D\xD8\x7E\x89\x01\xF0\x04\x28\x4C\xB2\xBD\x28\x4C\xC4\xBD")
+    
     # Skip Ceres
     romWriter.writeBytes(0x16ebb, b"\x05")
 
@@ -187,7 +191,7 @@ def write_rom(game: Game, romWriter: Optional[RomWriter] = None) -> str:
 
     romWriter.finalizeRom(rom1_path)
 
-    ipspatch.apply_patch(rom1_path,"return_of_justin_grey_door.ips")
+    #ipspatch.apply_patch(rom1_path,"return_of_justin_grey_door.ips")
 
     print("Done!")
     print(f"Filename is {rom_name}")
